@@ -47,16 +47,23 @@ void mostrar(Nodo *&frente, int cont){
 	Nodo *temp;
 	temp = frente;
 	cout << endl;
-	while(frente != NULL){
-		cout << "\t" << frente->valor;
+	if(cont == 0)
+		cout << "LA COLA ESTA VACIA" << endl;
+	else
+		printf("\tCOLA:\n");
+	for(int i=0; i<cont; i++){
+		printf("\t");
+		cout << temp->valor;
 		temp = temp->next;
 	}
 	cout << endl;
 }
 
 void tope(Nodo *&frente, Nodo *&fin, int n){
-	cout << "Primer Dato: " << frente->valor << endl;
-	cout << "Ultimo Dato: " << fin->valor << endl << endl;
+	if(frente != NULL)
+		cout << "Primer Dato: " << frente->valor << endl;
+	if(fin != NULL)
+		cout << "Ultimo Dato: " << fin->valor << endl << endl;
 	
 }
 
@@ -76,7 +83,7 @@ int capturar(){
 	cin >> dato;
 	
 	for(i=0; i < dato.size(); i++){
-		if(isdigit(dato[i]) != 0){
+		if(isdigit(dato[i]) == 0){
 			if((int)dato[i] != 0){
 				cout << "DATO INCORRECTO" << endl;
 				system("pause");
@@ -96,17 +103,20 @@ int capturar(){
 
 int main(){
 	string opc;
-	int num, f=1, m=1, t=1, cont = 0, cont2 = 0;
+	int num, f=1, m=1, t=1, cont = 0;
 	Nodo *frente = NULL,*fin = NULL;
 	
 	while(f==1){
+		system("cls");
 		if(m == 1){
 			mostrar(frente, cont);
-			cout << endl;
+			if(frente != NULL)
+				cout << endl;
 		}
 		if(t == 1){
 			tope(frente, fin, cont);
-			cout << endl;
+			if(frente != NULL || fin != NULL)
+				cout << endl;
 		}
 		cout << "----------Seleccione una Opcion---------" << endl;
 		cout << "1) Agregar" << endl;
@@ -125,8 +135,14 @@ int main(){
 			
 		}
 		else if(opc == "2"){
-			eliminar(frente, fin);
-			cont--;
+			if(cont == 0){
+				cout << endl << "No puedes quitarte elementos a una cola vacia" << endl;
+				system("pause");
+			}
+			else{
+				eliminar(frente, fin);
+				cont--;
+			}
 		}
 		else if(opc == "3"){
 			t = cambio(t);
@@ -137,6 +153,7 @@ int main(){
 		else if(opc == "5"){
 			system("cls");
 			cout << "FIN DEL PROGRAMA" << endl;
+			f=0;
 		}
 		else{
 			cout << "Opcion Incorrecta" << endl;
